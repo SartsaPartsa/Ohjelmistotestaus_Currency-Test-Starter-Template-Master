@@ -1,6 +1,58 @@
+## Sovelluksen käynnistäminen
+
+Valuuttamuunnossovellus koostuu palvelimesta (backend) ja käyttöliittymästä (frontend). Molemmat käynnistetään erikseen.
+
+### Palvelimen käynnistäminen
+
+Avaa terminaali ja siirry projektin palvelinkansioon:
+
+```bash
+cd server
+```
+
+Asenna tarvittavat riippuvuudet:
+
+```bash
+npm install
+```
+
+Käynnistä palvelin:
+
+```bash
+npm run dev
+```
+
+Palvelin käynnistyy oletusarvoisesti osoitteeseen `http://localhost:3000`.
+
+Jätä terminaali auki, jotta palvelin pysyy käynnissä.
+
+### Käyttöliittymän käynnistäminen
+
+Avaa toinen terminaali ja siirry projektin pääkansioon.
+
+Asenna tarvittavat riippuvuudet:
+
+```bash
+npm install
+```
+
+Käynnistä käyttöliittymä:
+
+```bash
+npm run dev
+```
+
+Käyttöliittymä käynnistyy yleensä osoitteeseen `http://localhost:5173`.
+
+Avaa osoite selaimessa, jotta pääset käyttämään valuuttamuunninta.
+
+Palvelimen ja käyttöliittymän täytyy olla käynnissä samanaikaisesti, jotta sovellus toimii kokonaisuudessaan.
+
+Sovelluksen voi pysäyttää painamalla kummassakin terminaalissa `Ctrl + C`.
+
 ## Testaus
 
-Projektissa käytetään Vitestiä automaattiseen ohjelmistotestaukseen.
+Projektissa käytetään Vitestiä automaattiseen ohjelmistotestaukseen ja Supertestiä HTTP-rajapintojen testaamiseen.
 
 Testit sijaitsevat `server/tests`-kansiossa. Testauksessa tarkistetaan valuuttamuuntimen laskentaa, syötteiden käsittelyä, palvelimen toimintaa ja virhetilanteita.
 
@@ -20,37 +72,21 @@ Testeissä tarkistetaan esimerkiksi:
 
 ### Controllerin testaus
 
-Controllerin testeissä tarkistetaan käyttäjän antamien tietojen
-käsittelyä ja validointia.
+Controllerin testeissä tarkistetaan käyttäjän antamien tietojen käsittelyä ja validointia.
 
-Testeissä tarkistetaan sekä onnistuneita tilanteita että
-virheellisiä syötteitä.
+Testeissä tarkistetaan sekä onnistuneita tilanteita että virheellisiä syötteitä.
 
 ### HTTP-reittien testaus
 
-HTTP-reittien testeissä tarkistetaan, että palvelimen reitit
-toimivat ja palauttavat odotetut vastaukset.
+HTTP-reittien testeissä tarkistetaan, että palvelimen reitit toimivat ja palauttavat odotetut vastaukset.
 
-Testeissä käytetään mockeja, joilla simuloidaan controllerin
-vastauksia. Tämän vuoksi reittitestit eivät yksin tarkista
-varsinaista syötteiden validointia.
+Testeissä käytetään mockeja, joilla simuloidaan controllerin vastauksia. Tämän vuoksi reittitestit eivät yksin tarkista varsinaista syötteiden validointia.
 
 ### Mockien käyttö
 
-Testeissä käytetään mockeja, joiden avulla voidaan korvata
-sovelluksen riippuvuuksia testauksen ajaksi.
+Testeissä käytetään mockeja, joiden avulla voidaan korvata sovelluksen riippuvuuksia testauksen ajaksi.
 
-Näin yksittäisiä toimintoja voidaan testata ilman oikeita
-pyyntöjä ulkoiseen rajapintaan.
-
-### Käyttöliittymän testaus
-
-Projektissa on myös Playwright-testaukseen liittyviä asetuksia
-ja testitiedosto.
-
-Playwright-testitiedosto on kuitenkin vielä tyhjä, joten
-käyttöliittymälle ei ole toteutettu automaattisia
-Playwright-testejä.
+Näin yksittäisiä toimintoja voidaan testata ilman oikeita pyyntöjä ulkoiseen rajapintaan.
 
 
 ## Testien suorittaminen
@@ -107,14 +143,13 @@ Viimeisimmässä testiajossa testikattavuus oli:
 - Functions – 100 %
 - Lines – 100 %
 
-Vaikka testikattavuus on 100 %, se ei tarkoita, että kaikki
-mahdolliset tilanteet olisi testattu.
+Vaikka testikattavuus on 100 %, se ei tarkoita, että kaikki mahdolliset tilanteet olisi testattu.
 
 Testikattavuuden avulla voidaan seurata, kuinka kattavasti automaattiset testit suorittavat sovelluksen koodia.
 
 ## Yhteenveto
 
-Harjoitustyössä tutustuin automaattiseen ohjelmistotestaukseen ja testien kirjoittamiseen Vitestillä.
+Harjoitustyössä tutustuin automaattiseen ohjelmistotestaukseen ja testien kirjoittamiseen Vitestillä ja Supertestillä.
 
 Testien avulla tarkistin valuuttamuuntimen toimintaa erilaisissa tilanteissa. Samalla opin käyttämään mockeja, testaamaan rajapinnan vastauksia ja tarkastelemaan testikattavuutta.
 
