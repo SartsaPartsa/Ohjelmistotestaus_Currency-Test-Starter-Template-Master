@@ -1,13 +1,18 @@
 import { expect, test, vi, afterEach } from 'vitest'
+import * as convertUtils from '../utils/convert'
 import { convert } from '../services/currencyService'
 
-// Palautetaan alkuperäinen fetch jokaisen testin jälkeen
+// Palautetaan alkuperäinen fetch ja poistetaan spyt jokaisen testin jälkeen
 afterEach(() => {
   vi.unstubAllGlobals()
+  vi.restoreAllMocks()
 })
 
 // Testataan, että valuuttamuunnos onnistuu
 test('Converts currency successfully', async () => {
+
+  // Seurataan calculateConversion-funktion kutsumista
+  const conversionSpy = vi.spyOn(convertUtils, 'calculateConversion')
 
   // Korvataan oikea API-kutsu testivastauksella
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
@@ -19,6 +24,9 @@ test('Converts currency successfully', async () => {
 
   // Muunnetaan 100 euroa dollareiksi
   const result = await convert('EUR', 'USD', 100)
+
+  // Tarkistetaan, että laskentafunktiota kutsuttiin oikeilla arvoilla
+  expect(conversionSpy).toHaveBeenCalledWith(100, 0.9)
 
   // Tarkistetaan, että tulos on 90
   expect(result).toEqual({ amount: 90 })
@@ -51,4 +59,15 @@ test('Returns error when exchange rate is missing', async () => {
   // Tarkistetaan, että palautetaan oikea virheilmoitus
   await expect(convert('EUR', 'USD', 100))
     .rejects.toThrow('Exchange rate is not a number.')
+})
+
+// Testataan, että myös muu kuin Error-tyyppinen virhe käsitellään
+test('Returns error when API throws a string', async () => {
+
+  // Määritetään API-kutsu epäonnistumaan merkkijonolla
+  vi.stubGlobal('fetch', vi.fn().mockRejectedValue('API error'))
+
+  // Tarkistetaan, että ohjelma palauttaa yleisen virheilmoituksen
+  await expect(convert('EUR', 'USD', 100))
+    .rejects.toThrow('Error calculating conversion.')
 })

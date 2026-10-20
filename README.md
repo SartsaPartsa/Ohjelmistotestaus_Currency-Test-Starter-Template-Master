@@ -1,39 +1,130 @@
-# Automated testing example projet
-This is an example project demonstrating automated testing. App is a simple currency converter app using publicly available API for getting currency exchange rates. It contains unit tests for backend. Mocking, stubbing and spying are demonstated. There are also API tests and E2E test for the frontend.
+# Valuuttamuuntimen ohjelmistotestaus
 
+## Projektin kuvaus
 
+Tämä projekti on toteutettu osana ohjelmistotestauksen opintojaksoa. Harjoitustyössä testataan valmista valuuttamuunninsovellusta, joka muuntaa rahasummia eri valuuttojen välillä.
 
-## Setting up
+Sovelluksessa käyttäjä voi valita lähtövaluutan, kohdevaluutan ja muunnettavan summan. Sovellus hakee valuuttakurssin ulkoisesta rajapinnasta ja laskee muunnetun summan.
 
-Project contains .env files, since there are no sensitive data. If Node or React needs to reconfigured, edit .env files. There are two, one for the front end on root folder and a second one under the server folder. By default, backend is running on http://localhost:3000 and frontend on http://localhost/5173. 
+Harjoitustyön tavoitteena on tutustua ohjelmistotestauksen eri menetelmiin, kirjoittaa automaattisia testejä ja tarkastella testikattavuutta.
 
-Install node modules for both backend and frontend. Run `npm i` under server and root for that.
-You may also need to run `npm i express cors dotenv` on server folder
+## Käytetyt teknologiat
 
-## Running app
+Projektissa käytetään seuraavia teknologioita:
 
-Run backend by navigating to server folder and running `npm run dev` or `npm run start`. 
-Run frontend by navigation to root folder and running `npm run dev`.
+- TypeScript ja JavaScript
+- React
+- Node.js
+- Express
+- Vitest
+- Vite
 
-## Reset version control
+Valuuttakurssit haetaan Frankfurter-rajapinnasta.
 
-Code is attached to a repository in Github already. To reset/replace that, delete .git folder on root and run npm init again. After that you are able to start version control from scratch again.
+## Projektin rakenne
 
-## Testing app with REST Client
+Sovellus koostuu käyttöliittymästä ja palvelimesta.
 
-Run backend by navigating to server folder and running `npm run dev` or `npm run start`. 
-Open test.rest file under server/tests folder and press Send Request visible above test script.
+Käyttöliittymä on toteutettu Reactilla. Palvelin on toteutettu Expressillä, ja se käsittelee valuuttamuunnokseen liittyvät pyynnöt.
 
-## Running backend tests with Vitest
+Palvelimen keskeiset tiedostot:
 
-Navigate to server folder and run `npm run test`.
+- `server/index.ts` – palvelimen käynnistäminen ja reittien määrittäminen
+- `server/routes/currencyRoutes.ts` – rajapinnan reitit
+- `server/controllers/currencyController.ts` – pyyntöjen käsittely ja syötteiden tarkistaminen
+- `server/services/currencyService.ts` – valuuttakurssien hakeminen ja muunnoksen suorittaminen
+- `server/utils/convert.ts` – muunnettavan summan laskeminen
 
-## Running frontend tests with Playwright
+Automaattiset testit sijaitsevat `server/tests`-kansiossa.
 
-Navigate to root folder and run `npx playwright test`. Make sure, that backend is running. Playwright configuration will start frontend, if not running, but not the backend.
+## Testaus
 
+Harjoitustyössä on toteutettu automaattisia testejä Vitestillä.
 
+Testauksessa tarkistetaan valuuttamuuntimen toimintaa sekä onnistuneissa että virheellisissä tilanteissa.
 
+### Yksikkötestit
 
+Yksikkötesteillä tarkistetaan sovelluksen yksittäisten toimintojen oikeellisuutta.
 
+Testeissä tarkistetaan esimerkiksi:
 
+- Valuuttamuunnoksen laskeminen
+- Kelvollisten ja virheellisten syötteiden käsittely
+- Puuttuvien valuuttakoodien käsittely
+- Virheellisten rahasummien käsittely
+- Valuuttakurssin hakemisen onnistuminen
+- Rajapinnasta palautuvien virheiden käsittely
+
+### Rajapintatestit
+
+Rajapintatesteillä tarkistetaan palvelimen toiminta HTTP-pyyntöjen avulla.
+
+Testeissä tarkistetaan esimerkiksi:
+
+- Onnistunut valuuttamuunnos
+- Virheelliset valuuttakoodit
+- Puuttuvat pakolliset tiedot
+- Negatiivisen rahasumman käsittely
+- HTTP-vastausten tilakoodit
+
+### Mockien käyttö
+
+Osassa testeistä käytetään mockeja, joiden avulla voidaan korvata sovelluksen riippuvuuksia testin ajaksi.
+
+Näin yksittäisiä toimintoja voidaan testata ilman, että jokaisessa testissä tarvitsee tehdä oikeita pyyntöjä ulkoiseen rajapintaan.
+
+## Testien suorittaminen
+
+Siirry ensin projektin palvelinkansioon:
+
+```bash
+cd server
+```
+
+Asenna tarvittavat riippuvuudet:
+
+```bash
+npm install
+```
+
+Suorita kaikki testit:
+
+```bash
+npx vitest run
+```
+
+Yksittäisen testitiedoston voi suorittaa esimerkiksi komennolla:
+
+```bash
+npx vitest run tests/currencyController.test.ts
+```
+
+## Testikattavuus
+
+Testikattavuutta tarkastellaan Vitestin avulla.
+
+Suorita testit ja muodosta kattavuusraportti komennolla:
+
+```bash
+npm run coverage
+```
+
+Raportista nähdään, kuinka suuri osa sovelluksen koodista ja sen eri suoritushaaroista on tullut testatuksi.
+
+Kattavuusraportissa tarkastellaan seuraavia osa-alueita:
+
+- Statements – suoritetut lauseet
+- Branches – testatut suoritushaarat
+- Functions – testatut funktiot
+- Lines – suoritetut koodirivit
+
+Testikattavuuden avulla voidaan tunnistaa kohtia, joihin tarvitaan vielä lisää testejä.
+
+## Yhteenveto
+
+Harjoitustyössä tutustuin automaattiseen ohjelmistotestaukseen ja testien kirjoittamiseen Vitestillä.
+
+Testien avulla tarkistin valuuttamuuntimen toimintaa erilaisissa tilanteissa. Samalla opin käyttämään mockeja, testaamaan rajapinnan vastauksia ja tarkastelemaan testikattavuutta.
+
+Harjoitustyö auttoi ymmärtämään, miten automaattiset testit voivat helpottaa virheiden löytämistä ja varmistaa sovelluksen toimintaa.
