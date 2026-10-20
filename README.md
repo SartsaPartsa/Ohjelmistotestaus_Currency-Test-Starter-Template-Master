@@ -55,6 +55,8 @@ Playwright-testejä.
 
 ## Testien suorittaminen
 
+## Testien suorittaminen
+
 Siirry ensin projektin palvelinkansioon:
 
 ```bash
@@ -70,14 +72,15 @@ npm install
 Suorita kaikki testit:
 
 ```bash
-npx vitest run
+npm run test
 ```
 
 Yksittäisen testitiedoston voi suorittaa esimerkiksi komennolla:
 
 ```bash
-npx vitest run tests/currencyController.test.ts
+npm run test -- tests/currencyController.test.ts
 ```
+
 Viimeisimmässä testiajossa kaikki 20 testiä menivät läpi.
 
 ## Testikattavuus
