@@ -55,8 +55,6 @@ Playwright-testejä.
 
 ## Testien suorittaminen
 
-## Testien suorittaminen
-
 Siirry ensin projektin palvelinkansioon:
 
 ```bash
