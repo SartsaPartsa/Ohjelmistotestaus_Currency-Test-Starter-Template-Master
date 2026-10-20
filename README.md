@@ -1,78 +1,57 @@
-# Valuuttamuuntimen ohjelmistotestaus
-
-## Projektin kuvaus
-
-Tämä projekti on toteutettu osana ohjelmistotestauksen opintojaksoa. Harjoitustyössä testataan valmista valuuttamuunninsovellusta, joka muuntaa rahasummia eri valuuttojen välillä.
-
-Sovelluksessa käyttäjä voi valita lähtövaluutan, kohdevaluutan ja muunnettavan summan. Sovellus hakee valuuttakurssin ulkoisesta rajapinnasta ja laskee muunnetun summan.
-
-Harjoitustyön tavoitteena on tutustua ohjelmistotestauksen eri menetelmiin, kirjoittaa automaattisia testejä ja tarkastella testikattavuutta.
-
-## Käytetyt teknologiat
-
-Projektissa käytetään seuraavia teknologioita:
-
-- TypeScript ja JavaScript
-- React
-- Node.js
-- Express
-- Vitest
-- Vite
-
-Valuuttakurssit haetaan Frankfurter-rajapinnasta.
-
-## Projektin rakenne
-
-Sovellus koostuu käyttöliittymästä ja palvelimesta.
-
-Käyttöliittymä on toteutettu Reactilla. Palvelin on toteutettu Expressillä, ja se käsittelee valuuttamuunnokseen liittyvät pyynnöt.
-
-Palvelimen keskeiset tiedostot:
-
-- `server/index.ts` – palvelimen käynnistäminen ja reittien määrittäminen
-- `server/routes/currencyRoutes.ts` – rajapinnan reitit
-- `server/controllers/currencyController.ts` – pyyntöjen käsittely ja syötteiden tarkistaminen
-- `server/services/currencyService.ts` – valuuttakurssien hakeminen ja muunnoksen suorittaminen
-- `server/utils/convert.ts` – muunnettavan summan laskeminen
-
-Automaattiset testit sijaitsevat `server/tests`-kansiossa.
-
 ## Testaus
 
-Harjoitustyössä on toteutettu automaattisia testejä Vitestillä.
+Projektissa käytetään Vitestiä automaattiseen ohjelmistotestaukseen.
 
-Testauksessa tarkistetaan valuuttamuuntimen toimintaa sekä onnistuneissa että virheellisissä tilanteissa.
+Testit sijaitsevat `server/tests`-kansiossa. Testauksessa tarkistetaan valuuttamuuntimen laskentaa, syötteiden käsittelyä, palvelimen toimintaa ja virhetilanteita.
 
 ### Yksikkötestit
 
-Yksikkötesteillä tarkistetaan sovelluksen yksittäisten toimintojen oikeellisuutta.
+Yksikkötesteillä tarkistetaan sovelluksen yksittäisiä toimintoja.
 
 Testeissä tarkistetaan esimerkiksi:
 
 - Valuuttamuunnoksen laskeminen
-- Kelvollisten ja virheellisten syötteiden käsittely
 - Puuttuvien valuuttakoodien käsittely
-- Virheellisten rahasummien käsittely
-- Valuuttakurssin hakemisen onnistuminen
+- Virheellisten valuuttakoodien käsittely
+- Nollasumman käsittely
+- Virheellisen rahasumman käsittely
+- Valuuttakurssin hakeminen
 - Rajapinnasta palautuvien virheiden käsittely
 
-### Rajapintatestit
+### Controllerin testaus
 
-Rajapintatesteillä tarkistetaan palvelimen toiminta HTTP-pyyntöjen avulla.
+Controllerin testeissä tarkistetaan käyttäjän antamien tietojen
+käsittelyä ja validointia.
 
-Testeissä tarkistetaan esimerkiksi:
+Testeissä tarkistetaan sekä onnistuneita tilanteita että
+virheellisiä syötteitä.
 
-- Onnistunut valuuttamuunnos
-- Virheelliset valuuttakoodit
-- Puuttuvat pakolliset tiedot
-- Negatiivisen rahasumman käsittely
-- HTTP-vastausten tilakoodit
+### HTTP-reittien testaus
+
+HTTP-reittien testeissä tarkistetaan, että palvelimen reitit
+toimivat ja palauttavat odotetut vastaukset.
+
+Testeissä käytetään mockeja, joilla simuloidaan controllerin
+vastauksia. Tämän vuoksi reittitestit eivät yksin tarkista
+varsinaista syötteiden validointia.
 
 ### Mockien käyttö
 
-Osassa testeistä käytetään mockeja, joiden avulla voidaan korvata sovelluksen riippuvuuksia testin ajaksi.
+Testeissä käytetään mockeja, joiden avulla voidaan korvata
+sovelluksen riippuvuuksia testauksen ajaksi.
 
-Näin yksittäisiä toimintoja voidaan testata ilman, että jokaisessa testissä tarvitsee tehdä oikeita pyyntöjä ulkoiseen rajapintaan.
+Näin yksittäisiä toimintoja voidaan testata ilman oikeita
+pyyntöjä ulkoiseen rajapintaan.
+
+### Käyttöliittymän testaus
+
+Projektissa on myös Playwright-testaukseen liittyviä asetuksia
+ja testitiedosto.
+
+Playwright-testitiedosto on kuitenkin vielä tyhjä, joten
+käyttöliittymälle ei ole toteutettu automaattisia
+Playwright-testejä.
+
 
 ## Testien suorittaminen
 
@@ -99,6 +78,7 @@ Yksittäisen testitiedoston voi suorittaa esimerkiksi komennolla:
 ```bash
 npx vitest run tests/currencyController.test.ts
 ```
+Viimeisimmässä testiajossa kaikki 20 testiä menivät läpi.
 
 ## Testikattavuus
 
@@ -119,7 +99,17 @@ Kattavuusraportissa tarkastellaan seuraavia osa-alueita:
 - Functions – testatut funktiot
 - Lines – suoritetut koodirivit
 
-Testikattavuuden avulla voidaan tunnistaa kohtia, joihin tarvitaan vielä lisää testejä.
+Viimeisimmässä testiajossa testikattavuus oli:
+
+- Statements – 100 %
+- Branches – 100 %
+- Functions – 100 %
+- Lines – 100 %
+
+Vaikka testikattavuus on 100 %, se ei tarkoita, että kaikki
+mahdolliset tilanteet olisi testattu.
+
+Testikattavuuden avulla voidaan seurata, kuinka kattavasti automaattiset testit suorittavat sovelluksen koodia.
 
 ## Yhteenveto
 
