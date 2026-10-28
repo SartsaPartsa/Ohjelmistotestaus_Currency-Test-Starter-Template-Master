@@ -83,11 +83,9 @@ Testeissä tarkistetaan esimerkiksi:
 
 ### Controllerin testaus
 
-Controllerin testeissä tarkistetaan käyttäjän antamien tietojen käsittelyä ja validointia.
+Controllerin testeissä tarkistetaan käyttäjän antamien tietojen käsittelyä ja validointia. Testeissä varmistetaan, että puuttuvat tai virheelliset tiedot palauttavat oikean virheilmoituksen ja HTTP-tilakoodin.
 
-Testeissä tarkistetaan esimerkiksi, että virheelliset tiedot aiheuttavat oikean virheilmoituksen ja että onnistuneessa muunnoksessa palvelulle välitetään pyynnön arvot sellaisenaan.
-
-Controller tarkistaa valuuttakoodit siistittyinä (ylimääräiset välilyönnit poistetaan ja kirjaimet muutetaan isoiksi) ja rahasumman numerona, mutta palvelulle välitetään alkuperäiset arvot. Tätä varten on oma testi.
+Onnistuneen valuuttamuunnoksen testissä tarkistetaan, että controller kutsuu palvelua oikeilla arvoilla ja palauttaa palvelun tuloksen. Erillisessä testissä varmistetaan, että controller välittää palvelulle käyttäjän pyynnössä antamat arvot sellaisinaan. Palvelu korvataan testeissä mockilla, joten controllerin toiminta voidaan testata erillään oikeasta valuuttakurssipalvelusta.
 
 
 ### Mockaus, stubbaus ja spy
