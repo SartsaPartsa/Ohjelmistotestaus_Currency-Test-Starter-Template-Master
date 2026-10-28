@@ -149,7 +149,7 @@ Yksittäisen testitiedoston voi suorittaa esimerkiksi komennolla:
 npm run test -- --run tests/currencyController.test.ts
 ```
 
-Viimeisimmässä testiajossa kaikki 22 testiä menivät läpi.
+Viimeisimmässä testiajossa kaikki 23 testiä menivät läpi.
 
 ## Testikattavuus
 
