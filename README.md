@@ -34,7 +34,7 @@ Palvelimen asetukset määritellään server/.env-tiedostossa:
 * PORT – palvelimen portti
 * FRANKFURTER_API – valuuttakurssipalvelun osoite (valinnainen)
 
-Jos valuuttakurssipalvelun osoitetta ei ole määritelty, käytetään oletusosoitetta https://api.frankfurter.app/latest.
+Osoite luetaan `.env`-tiedostosta (`https://api.frankfurter.dev/v1/latest`). Jos osoitetta ei ole määritelty, koodissa käytetään oletusosoitetta https://api.frankfurter.app/latest.
 
 Jätä terminaali auki, jotta palvelin pysyy käynnissä.
 

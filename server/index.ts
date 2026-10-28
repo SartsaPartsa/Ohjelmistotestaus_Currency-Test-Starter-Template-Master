@@ -1,11 +1,11 @@
 // Import required dependencies
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import currencyRoutes from './routes/currencyRoutes'
 
 // Load environment variables from .env file
-dotenv.config()
+//dotenv.config()
 
 // Initialize Express application
 const app = express()
