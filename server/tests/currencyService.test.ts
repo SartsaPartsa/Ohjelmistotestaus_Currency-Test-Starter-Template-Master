@@ -5,6 +5,7 @@ import { convert } from '../services/currencyService'
 // Palautetaan alkuperäinen fetch ja poistetaan spyt jokaisen testin jälkeen
 afterEach(() => {
   vi.unstubAllGlobals()
+  vi.unstubAllEnvs()
   vi.restoreAllMocks()
 })
 
@@ -48,6 +49,28 @@ test('Calls API with correct currencies', async () => {
 
   // Tarkistetaan, että pyynnön osoite on oikea
   expect(fetchMock).toHaveBeenCalledWith('https://api.frankfurter.app/latest?from=EUR&to=USD')
+})
+
+test('Uses API URL from environment variable', async () => {
+  // Tyhjennetään moduulivälimuisti, jotta palvelu lukee asetetun ympäristömuuttujan.
+  vi.resetModules()
+  vi.stubEnv('FRANKFURTER_API', 'https://custom-api.example/latest')
+
+  // Korvataan API-kutsu testivastauksella.
+  const fetchMock = vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      rates: { USD: 0.9 }
+    })
+  })
+  vi.stubGlobal('fetch', fetchMock)
+  const { convert: convertWithCustomApi } = await import('../services/currencyService')
+
+  // Muunnetaan valuuttaa ja tarkistetaan, että käytössä on ympäristömuuttujan osoite.
+  await convertWithCustomApi('EUR', 'USD', 100)
+
+  // Tarkistetaan, että pyyntö lähetettiin määritettyyn osoitteeseen.
+  expect(fetchMock).toHaveBeenCalledWith('https://custom-api.example/latest?from=EUR&to=USD')
 })
 
 // Testataan, että API-kutsun epäonnistuminen aiheuttaa virheen
